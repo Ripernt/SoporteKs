@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabla de Reportes</title>
+    <link rel="stylesheet" href="https://bootswatch.com/5/vapor/bootstrap.min.css">
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #645b5b;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tabla de Reportes</h1> <a href="/"><button>Volver al Menú</button></a>
+    <h2>Prioridad 1</h2>
+    <table id="prioridad1">
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Tipo de Error</th>
+            <th>Estado</th>
+        </tr>
+    </table>
+
+    <h2>Prioridad 2</h2>
+    <table id="prioridad2">
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Tipo de Error</th>
+            <th>Estado</th>
+        </tr>
+    </table>
+
+    <h2>Prioridad 3</h2>
+    <table id="prioridad3">
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Tipo de Error</th>
+            <th>Estado</th>
+        </tr>
+    </table>
+
+    <script>
+        function cargarReportes() {
+            fetch('/reportes')
+                .then(response => response.json())
+                .then(data => {
+                    const prioridad1Table = document.getElementById('prioridad1');
+                    const prioridad2Table = document.getElementById('prioridad2');
+                    const prioridad3Table = document.getElementById('prioridad3');
+
+                    data.forEach(reporte => {
+                        const row = `<tr>
+                                        <td>${reporte.rep_id}</td>
+                                        <td>${reporte.rep_nombre}</td>
+                                        <td>${reporte.rep_tipo_de_error}</td>
+                                        <td>${mapState(reporte.pro_id)}</td>
+                                    </tr>`;
+                        if (reporte.rep_prioridad === 1) {
+                            prioridad1Table.innerHTML += row;
+                        } else if (reporte.rep_prioridad === 2) {
+                            prioridad2Table.innerHTML += row;
+                        } else if (reporte.rep_prioridad === 3) {
+                            prioridad3Table.innerHTML += row;
+                        }
+                    });
+                })
+                .catch(error => console.error('Error al cargar los reportes:', error));
+        }
+
+        function mapState(stateId) {
+            switch (stateId) {
+                case 1:
+                    return 'Pendiente';
+                case 2:
+                    return 'En proceso';
+                case 3:
+                    return 'Finalizada';
+                default:
+                    return 'Desconocido';
+            }
+        }
+
+        window.onload = cargarReportes;
+    </script>
+</body>
+</html>

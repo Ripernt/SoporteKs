@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actualizar Estado</title>
+    <link rel="stylesheet" href="https://bootswatch.com/5/vapor/bootstrap.min.css">
+</head>
+<body>
+    <h1>Actualizar Estado de Reporte</h1>
+    <form action="/actualizar" method="POST">
+        <label for="reporte_id">ID del Reporte:</label><br>
+        <input type="number" id="reporte_id" name="reporte_id" min="1"  required><br>
+        <label for="nuevo_estado">Nuevo Estado:</label><br>
+        <select id="nuevo_estado" name="nuevo_estado">
+            <option value="1">Pendiente</option>
+            <option value="2">En proceso</option>
+            <option value="3">Finalizada</option>
+        </select><br>
+        <button type="submit">Actualizar</button>
+    </form>
+    <br>
+    <a href="/"><button>Volver al Menú</button></a>
+</body>
+</html>
